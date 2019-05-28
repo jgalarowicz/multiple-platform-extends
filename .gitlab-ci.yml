@@ -59,6 +59,7 @@ before_script:
     - spack env list
     - spack env activate myopenspeedshop
     - spack env status
+    - module unload PrgEnv-intel
     - spack install openspeedshop %gcc@7.3.0 +cuda+openmpi ^cmake@3.6.0 os=sles12 target=x86_64
     - ls -lastr $HOME/spack/var/spack/environments/myopenspeedshop
 
