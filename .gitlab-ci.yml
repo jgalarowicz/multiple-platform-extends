@@ -8,14 +8,8 @@ stages:
   only:
     - web
 
-variables:
-  # In this repo we create a Git Submodule, in this case the official Spack
-  # repo ($ git submodule add https://github.com/spack/spack). In order to
-  # fetch this repo during the standard process we must define the
-  # 'GIT_SUBMODULE_STRATEGY'.
-  # Source: https://git-scm.com/book/en/v2/Git-Tools-Submodules
-  GIT_SUBMODULE_STRATEGY: recursive
-  
+# Set up these general platform 1 shell runner arguments
+# We can use this section in multiple jobs below  
 .runner_platform1_shell: &runner_platform1_shell
   tags:
     - SLES12
@@ -26,11 +20,13 @@ variables:
     - ecp     
     - test
 
+# Set up these general platform 2 batch runner arguments
+# We can use this section in multiple jobs below
 .runner_platform2_batch: &runner_platform2_batch
-  # Similiar to past example we are leveraging the GitLab Batch runner and as
+  # We are leveraging the GitLab Batch runner and as
   # such we will need to provide the job submission parameters.
-  #variables:
-  #  SCHEDULER_PARAMETERS: "--nodes=1 --partition=ecp-p9-4v100"
+  variables:
+    SCHEDULER_PARAMETERS: "--nodes=1 --partition=ecp-p9-4v100"
   tags:
     - CLE
     - batch
@@ -95,28 +91,32 @@ before_script:
     - osspcsamp "aprun -n 2 `which miniqmc` < ./input_args"
 
 # Use shared .build_spack_stage code and project activation code
-# Build on platform1 - shell executor
+# Build on platform 1 - shell executor by extending the common shared .build_spack_stage code
+# Also funnel in the project activation settings and the tags/variables for the platform
 build_spack_shell:
   extends: .build_spack_stage
   <<: *runner_platform1_shell
   <<: *project_activation
 
 # Use shared .build_spack_stage code and project activation code
-# Build on platform2 - batch executor
+# Build on platform2 - batch executor by extending the common shared .build_spack_stage code
+# Also funnel in the project activation settings and the tags/variables for the platform
 build_spack_batch:
   extends: .build_spack_stage
   <<: *runner_platform2_batch
   <<: *project_activation
 
 # Use shared .test_spack_stage code and project activation code
-# Test on plaform1 - shell executor
+# Test on platform1 - shell executor by extending the common shared .test_spack_stage code
+# Also funnel in the project activation settings and the tags/variables for the platform
 test_spack_shell:
   extends: .test_spack_stage
   <<: *runner_platform1_shell
   <<: *project_activation
 
 # Use shared .test_spack_stage code and project activation code
-# Test on platform2 - batch executor
+# Test on platform2 - batch executor by extending the common shared .test_spack_stage code
+# Also funnel in the project activation settings and the tags/variables for the platform
 test_spack_batch:
   extends: .test_spack_stage
   <<: *runner_platform2_batch
