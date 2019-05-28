@@ -34,7 +34,7 @@ variables:
   tags:
     - CLE
     - batch
-    - anl-theta-xeon-001     
+    - anl-theta-knl-001     
     - cray-xc40     
     - ecp-theta     
     - ecp     
