@@ -45,7 +45,6 @@ before_script:
 .build_spack_stage:
   stage: build
   script:
-    - whoami
     - spack --version
     - spack env create myciminiqmc || echo "Spack env myciminiqmc already created"
     - spack env list
