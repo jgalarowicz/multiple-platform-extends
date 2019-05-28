@@ -65,8 +65,8 @@ before_script:
     - spack env list
     - spack env activate myopenspeedshop
     - spack env status
-    - spack install openspeedshop +cuda+openmpi ^cmake@3.6.0 
-    - ls -lastr $HOME/spack/var/spack/environments/myopenspeedshop
+    #- spack install openspeedshop +cuda+openmpi ^cmake@3.6.0 
+    #- ls -lastr $HOME/spack/var/spack/environments/myopenspeedshop
 
 # Share this across jobs/machines
 .test_spack_stage: 
@@ -83,16 +83,16 @@ before_script:
     - spack find
     - which miniqmc
     - which aprun
-    - aprun -np 2 miniqmc < ./input_args
+    #- aprun -np 2 miniqmc < ./input_args
     - spack env list
-    - spack env create myopenspeedshop || echo "Spack env myopenspeedshop already created"     
-    - spack env list     
-    - spack env activate myopenspeedshop     
+    #- spack env create myopenspeedshop || echo "Spack env myopenspeedshop already created"     
+    #- spack env list     
+    #- spack env activate myopenspeedshop     
     # If you need to load the module associated with the package you are     
     # building.  This code will load the package's module for you     
-    - spack module tcl find --full-path openspeedshop > /tmp/openspeedshop_module     
-    - while read line; do echo $line; module load $line; done < /tmp/openspeedshop_module     
-    - module list
+    #- spack module tcl find --full-path openspeedshop > /tmp/openspeedshop_module     
+    #- while read line; do echo $line; module load $line; done < /tmp/openspeedshop_module     
+    #- module list
     #- osspcsamp "aprun -n 2 `which miniqmc` < ./input_args"
 
 # Use shared .build_spack_stage code and project activation code
