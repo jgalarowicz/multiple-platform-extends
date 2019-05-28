@@ -59,7 +59,7 @@ before_script:
     - spack env list
     - spack env activate myopenspeedshop
     - spack env status
-    - spack install openspeedshop +cuda+openmpi ^cmake@3.6.0 os=sles12 target=x86_64
+    - spack install openspeedshop %gcc@7.3.0 +cuda+openmpi ^cmake@3.6.0 os=sles12 target=x86_64
     - ls -lastr $HOME/spack/var/spack/environments/myopenspeedshop
 
 # Share this across jobs/machines
