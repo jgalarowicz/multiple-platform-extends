@@ -96,24 +96,28 @@ before_script:
     #- osspcsamp "aprun -n 2 `which miniqmc` < ./input_args"
 
 # Use shared .build_spack_stage code and project activation code
+# Build on platform1 - shell executor
 build_spack_shell:
   extends: .build_spack_stage
   <<: *runner_platform1_shell
   <<: *project_activation
 
 # Use shared .build_spack_stage code and project activation code
+# Build on platform2 - batch executor
 build_spack_batch:
   extends: .build_spack_stage
   <<: *runner_platform2_batch
   <<: *project_activation
 
 # Use shared .test_spack_stage code and project activation code
+# Test on plaform1 - shell executor
 test_spack_shell:
   extends: .test_spack_stage
   <<: *runner_platform1_shell
   <<: *project_activation
 
 # Use shared .test_spack_stage code and project activation code
+# Test on platform2 - batch executor
 test_spack_batch:
   extends: .test_spack_stage
   <<: *runner_platform2_batch
