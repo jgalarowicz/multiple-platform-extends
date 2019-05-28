@@ -26,7 +26,7 @@ stages:
   # We are leveraging the GitLab Batch runner and as
   # such we will need to provide the job submission parameters.
   variables:
-    SCHEDULER_PARAMETERS: "--nodes=1 --partition=ecp-p9-4v100"
+    SCHEDULER_PARAMETERS: "-A Operations -n 1  -t 10 -q default"
   tags:
     - CLE
     - batch
