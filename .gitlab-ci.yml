@@ -50,7 +50,7 @@ before_script:
     - spack env list
     - spack env activate myciminiqmc
     - spack env status
-    - spack install miniqmc^cmake@3.6.0 ^openmpi
+    - spack install miniqmc^cmake@3.6.0 ^openmpi os=cnl6 target=knl
     - ls -lastr $HOME/spack/var/spack/environments/myciminiqmc
     - spack env status
     - spack env deactivate
@@ -59,7 +59,7 @@ before_script:
     - spack env list
     - spack env activate myopenspeedshop
     - spack env status
-    - spack install openspeedshop +cuda+openmpi ^cmake@3.6.0 os=SLES12
+    - spack install openspeedshop +cuda+openmpi ^cmake@3.6.0 os=sles12 target=xeon
     - ls -lastr $HOME/spack/var/spack/environments/myopenspeedshop
 
 # Share this across jobs/machines
