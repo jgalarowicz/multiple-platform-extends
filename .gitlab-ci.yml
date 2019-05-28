@@ -18,12 +18,12 @@ variables:
   
 .runner_platform1_shell: &runner_platform1_shell
   tags:
-    - SLES12     
+    - SLES12
+    - shell
     - anl-theta-xeon-001     
     - cray-xc40     
     - ecp-theta     
     - ecp     
-    - shell     
     - test
 
 .runner_platform2_batch: &runner_platform2_batch
@@ -32,7 +32,8 @@ variables:
   #variables:
   #  SCHEDULER_PARAMETERS: "--nodes=1 --partition=ecp-p9-4v100"
   tags:
-    - CLE     
+    - CLE
+    - batch
     - anl-theta-xeon-001     
     - cray-xc40     
     - ecp-theta     
