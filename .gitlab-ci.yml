@@ -97,6 +97,9 @@ build_spack_shell:
   extends: .build_spack_stage
   <<: *runner_platform1_shell
   <<: *project_activation
+  # Because this job may not be the last one executed, allow it to fail so the others can still run
+  allow_failure: true
+
 
 # Use shared .build_spack_stage code and project activation code
 # Build on platform2 - batch executor by extending the common shared .build_spack_stage code
@@ -105,6 +108,9 @@ build_spack_batch:
   extends: .build_spack_stage
   <<: *runner_platform2_batch
   <<: *project_activation
+  # Because this job may not be the last one executed, allow it to fail so the others can still run
+  allow_failure: true
+
 
 # Use shared .test_spack_stage code and project activation code
 # Test on platform1 - shell executor by extending the common shared .test_spack_stage code
@@ -113,6 +119,11 @@ test_spack_shell:
   extends: .test_spack_stage
   <<: *runner_platform1_shell
   <<: *project_activation
+  dependencies:
+    - build_spack_shell
+  # Because this job may not be the last one executed, allow it to fail so the others can still run
+  allow_failure: true
+
 
 # Use shared .test_spack_stage code and project activation code
 # Test on platform2 - batch executor by extending the common shared .test_spack_stage code
@@ -121,5 +132,10 @@ test_spack_batch:
   extends: .test_spack_stage
   <<: *runner_platform2_batch
   <<: *project_activation
+  dependencies:
+    - build_spack_batch
+  # Because this job may not be the last one executed, allow it to fail so the others can still run
+  allow_failure: true
+
 
 
