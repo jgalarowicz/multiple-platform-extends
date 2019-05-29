@@ -1,3 +1,8 @@
+# This example shows how to run across multiple platforms
+# using common sections that are executed by both platforms.
+# These common sections of code are accessed using the extends 
+# gitlab-ci keyword.  It also shows dependencies and allows
+# other jobs to continue even if one of the paths fails.
 stages:
   - build
   - test
@@ -37,11 +42,13 @@ stages:
     - cobalt     
     - test
 
+# Execute this code section before running the other
+# jobs/stages
 before_script:
   - export TERM=xterm
   - source $HOME/spack/share/spack/setup-env.sh
 
-# Share this across jobs/machines
+# Share this common section of code across jobs/machines
 .build_spack_stage:
   stage: build
   script:
@@ -63,7 +70,7 @@ before_script:
     - spack install openspeedshop %gcc@7.3.0 +cuda+mpich ^cmake@3.6.0 os=sles12 target=x86_64
     - ls -lastr $HOME/spack/var/spack/environments/myopenspeedshop
 
-# Share this across jobs/machines
+# Share this common section of code across jobs/machines
 .test_spack_stage: 
   stage: test
   script:
@@ -83,10 +90,12 @@ before_script:
     - spack env create myopenspeedshop || echo "Spack env myopenspeedshop already created"     
     - spack env list     
     - spack env activate myopenspeedshop     
+
     # If you need to load the module associated with the package you are     
     # building.  This code will load the package's module for you     
     - spack module tcl find --full-path openspeedshop > /tmp/openspeedshop_module     
     - while read line; do echo $line; module load $line; done < /tmp/openspeedshop_module     
+
     - module list
     #- osspcsamp "aprun -n 2 `which miniqmc` < ./input_args"
 
@@ -136,6 +145,3 @@ test_spack_batch:
     - build_spack_batch
   # Because this job may not be the last one executed, allow it to fail so the others can still run
   allow_failure: true
-
-
-
